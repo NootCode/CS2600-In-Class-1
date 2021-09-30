@@ -49,8 +49,8 @@ int main(){
     printf("%s : $%.2f",meals[rngV].name, meals[rngV].price);
 
     double mealCost = meals[rngV].price;
-    double tipAmount = mealCost / tip;
-    double taxAmount = mealCost / tax;
+    double tipAmount = (double) tip /100 * mealCost;
+    double taxAmount = (double) tax /100 * mealCost;
 
     double totalCost = mealCost + tipAmount + taxAmount;
 
