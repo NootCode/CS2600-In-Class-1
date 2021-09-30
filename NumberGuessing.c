@@ -6,8 +6,9 @@
 */
 #include <stdio.h>
 #include <stdlib.h>
+#include <conio.h>
+
 static int maxNum = 10;
-typedef char guessing;
 void main(){
     getMenu();
 
@@ -27,10 +28,13 @@ void getMenu(){
         changeMax();
     if(pressed == 3)
         endGame();
+    
 }
+
 void endGame(){
     printf("Thanks for Playing!");
 }
+
 void changeMax(){
     int check = 0;
     while(check == 0){
@@ -39,38 +43,40 @@ void changeMax(){
         if(maxNum > 0)
             check = 1;
         else
-            printf("Enter a positive Value!\n");
+            printf("Enter a positive Value!");
     }
     getMenu();
 }
 
 void playGame(){
-    printf("the max is %d\n", maxNum);
     int guessed = 0;
-    guessing c;
-
     int randV = 1;
+    int win = 0;
+    char quit;
     srand(time(NULL));
     randV = ( rand() % maxNum) + 1;
-
-    printf("DEBUG: %d\n", randV);
-
-    while(guessed != randV){
-        printf("\nMake your guess: ");
-        c = getchar();
-
-        printf("YOU GUESSED: ");
-        putchar(c);
-
-        guessed = atoi(c);
+    while(guessed != rand){
+        printf("\nMake your guess from 1 - %d: ", maxNum);
+        scanf("%d", &guessed);
+        printf("You guessed: %d\n", (int)guessed);
         if(guessed == randV)
             break;
         else if(guessed > randV)
             printf("Too high!\n");
-        else
+        else if(guessed < randV)
             printf("Too Low!\n");
-    }
+        printf("Enter q to quit: ");
+        scanf("%s", &quit);
 
-    printf("\nYou win!\n");
+        if(quit == 'q'){
+            win = 1;
+            break;
+        }
+    }
+    if(win == 0)
+        printf("\nYou win!\n");
+    else
+        printf("\nTry Again Next Time\n");
+
     getMenu();
 }
