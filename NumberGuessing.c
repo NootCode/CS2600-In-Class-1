@@ -4,11 +4,14 @@
     create a function that will allow user to change max number
     call menu from main
 */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <conio.h>
 
-static int maxNum = 10;
+static int maxNum = 0;
+FILE *fp;
+
 void main(){
     getMenu();
 
@@ -16,6 +19,9 @@ void main(){
 }
 
 void getMenu(){
+    fp = fopen("maxNum.txt", "r+");
+    fscanf(fp, "%d", &maxNum);
+
     printf("Press 1 to play a game\n");
     printf("Press 2 to change max number\n");
     printf("Press 3 to quit\n");
@@ -26,8 +32,10 @@ void getMenu(){
         playGame();
     if(pressed == 2)
         changeMax();
-    if(pressed == 3)
+    if(pressed == 3){
+        fclose(fp);
         endGame();
+    }
     
 }
 
@@ -37,11 +45,16 @@ void endGame(){
 
 void changeMax(){
     int check = 0;
+    int value = 0;
     while(check == 0){
         printf("What would you like the max to be? ");
-        scanf("%d", &maxNum);
-        if(maxNum > 0)
+        scanf("%d", &value);
+        if(value > 0){
+            freopen("maxNum.txt", "w", fp);
+            fprintf(fp, "%d", value);
+            maxNum = value;
             check = 1;
+        }
         else
             printf("Enter a positive Value!");
     }
